@@ -1,10 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="100%" height="100%">
   <!-- Transparent background: adapts natively to the IDE's dark theme instead of showing a white square -->
 
-  <rect x="120" y="422" width="220" height="180" rx="24" fill="#0151FC"/>
-  <rect x="402" y="422" width="220" height="180" rx="24" fill="#01B3FD"/>
-  <rect x="684" y="422" width="220" height="180" rx="24" fill="#02F172"/>
+  <path d="
+    M 511,81
+    L 847,283
+    L 725,351
+    L 508,223
+    L 296,348
+    L 296,588
+    L 463,691
+    L 342,765
+    L 173,665
+    L 172,281
+    Z"
+    fill="#0151FC"
+  />
 
-  <circle cx="371" cy="512" r="18" fill="#F5F7FA"/>
-  <circle cx="653" cy="512" r="18" fill="#F5F7FA"/>
+  <path d="
+    M 846,412
+    L 844,668
+    L 518,863
+    L 393,795
+    L 724,589
+    L 721,540
+    L 567,538
+    L 568,412
+    Z"
+    fill="#01B3FD"
+  />
+
+  <polygon points="569,413 695,413 695,539 569,539" fill="#02F172" />
 </svg>

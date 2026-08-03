@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+## [0.1.1]
+
+### Fixed
+
+- Marketplace listing icon not rendering (showed a broken "plugin icon"
+  placeholder) — replaced with the same icon already proven to render
+  correctly on other Gap Hunter Labs listings.
+
 ## [0.1.0]
 
 ### Added
@@ -20,5 +28,6 @@
 - Nothing typed into the tool window (token, secret, key) is persisted
   between sessions — in-memory only.
 
-[Unreleased]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.1...HEAD
+[0.1.1]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/GapHunterLabs/jwt-companion/commits/0.1.0
