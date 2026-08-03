@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="100%" height="100%">
+  <!-- White background: keeps the mark legible in light theme and on the Marketplace listing card -->
+  <rect width="1024" height="1024" fill="#FFFFFF"/>
+
+  <!-- Three blocks + two dot separators: header.payload.signature, the visual shape of a JWT -->
+  <rect x="120" y="422" width="220" height="180" rx="24" fill="#0151FC"/>
+  <rect x="402" y="422" width="220" height="180" rx="24" fill="#01B3FD"/>
+  <rect x="684" y="422" width="220" height="180" rx="24" fill="#02F172"/>
+
+  <circle cx="371" cy="512" r="18" fill="#12203A"/>
+  <circle cx="653" cy="512" r="18" fill="#12203A"/>
+</svg>

@@ -1,0 +1,29 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>dev.gaphunter.jwtcompanion</id>
+    <name>JWT Companion</name>
+    <vendor>Gap Hunter Labs</vendor>
+    <description><![CDATA[
+        <p>Decode and verify JSON Web Tokens directly in the IDE. A dedicated tool
+        window decodes the header and payload (Base64URL, not standard Base64) into
+        two independently scrollable panels — no fixed-height table that becomes
+        unusable once a token has more than a couple of claims.</p>
+        <p>Signature verification for <code>HS256</code> (shared secret) and
+        <code>RS256</code> (public key/certificate) using only the JDK's own
+        <code>javax.crypto</code>/<code>java.security</code> APIs — no bundled
+        crypto library. <code>iat</code>/<code>exp</code>/<code>nbf</code> claims
+        are rendered as human-readable dates with a clear expired/expiring-soon/valid
+        indicator.</p>
+        <p>Nothing typed into the tool window is ever saved or cached between
+        sessions — the token, secret, and key are held in memory only.</p>
+        <p>Free. No license nags, no telemetry, no popups.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="JWT Companion"
+                    anchor="right"
+                    factoryClass="dev.gaphunter.jwtcompanion.ui.JwtToolWindowFactory"/>
+    </extensions>
+</idea-plugin>
