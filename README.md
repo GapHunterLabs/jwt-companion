@@ -61,7 +61,7 @@ click the matching **Verify** button.
 ## Enterprise / Team Licensing
 
 Need enterprise features, support for additional algorithms, or team
-licensing? Contact us at **kennyj.diazm@gmail.com**.
+licensing? Contact us at **gaphunterlabs@gmail.com**.
 
 ## Development
 
