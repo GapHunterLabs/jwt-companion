@@ -44,4 +44,23 @@ intellijPlatform {
             VerifyPluginTask.FailureLevel.SCHEDULED_FOR_REMOVAL_API_USAGES,
         )
     }
+
+    // Publish token read from a LOCAL, non-repo Gradle property
+    // (~/.gradle/gradle.properties, never committed) -- never hardcoded
+    // here or in any file this repo tracks. This block was missing from
+    // this plugin's build.gradle.kts (unlike every other plugin in the
+    // catalog) -- publishPlugin failed with "'token' property must be
+    // specified" until this was added, confirmed 2026-08-19.
+    publishing {
+        token.set(providers.gradleProperty("gapHunterLabs.marketplace.token"))
+    }
+
+    // Same pattern: signing material lives only in the local, non-repo
+    // gradle.properties (self-signed cert generated once for the whole
+    // catalog, 10-year validity).
+    signing {
+        certificateChain.set(providers.gradleProperty("gapHunterLabs.marketplace.certificateChain"))
+        privateKey.set(providers.gradleProperty("gapHunterLabs.marketplace.privateKey"))
+        password.set(providers.gradleProperty("gapHunterLabs.marketplace.privateKeyPassword"))
+    }
 }
