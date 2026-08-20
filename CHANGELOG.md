@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+## [0.1.2]
+
+### Fixed
+
+- Tool window no longer shows the generic platform icon in the sidebar —
+  the real Gap Hunter Labs mark is now declared via `icon=` on
+  `<toolWindow>`.
+
 ## [0.1.1]
 
 ### Fixed
