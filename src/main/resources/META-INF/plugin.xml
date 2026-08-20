@@ -24,6 +24,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="JWT Companion"
                     anchor="right"
+                    icon="/icons/toolWindow.svg"
                     factoryClass="dev.gaphunter.jwtcompanion.ui.JwtToolWindowFactory"/>
     </extensions>
 </idea-plugin>
