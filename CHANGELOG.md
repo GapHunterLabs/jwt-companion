@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+## [0.1.3]
+
+### Added
+
+- Review/star CTA: after 5 successful token decodes (never counted for
+  a malformed-token result), a one-time notification asks whether to
+  rate the plugin on Marketplace, with a permanent "Don't ask again"
+  option.
+
 ## [0.1.2]
 
 ### Fixed
@@ -36,7 +45,8 @@
 - Nothing typed into the tool window (token, secret, key) is persisted
   between sessions — in-memory only.
 
-[Unreleased]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.2...HEAD
+[Unreleased]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.3...HEAD
+[0.1.3]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/GapHunterLabs/jwt-companion/commits/0.1.0

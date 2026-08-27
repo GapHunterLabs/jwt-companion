@@ -14,7 +14,7 @@ import com.intellij.ui.content.ContentFactory
 class JwtToolWindowFactory : ToolWindowFactory, DumbAware {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val panel = JwtDecoderPanel()
+        val panel = JwtDecoderPanel(project)
         val content = ContentFactory.getInstance().createContent(panel, "", false)
         toolWindow.contentManager.addContent(content)
     }

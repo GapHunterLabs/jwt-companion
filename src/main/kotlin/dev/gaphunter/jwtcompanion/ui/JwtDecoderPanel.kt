@@ -1,6 +1,7 @@
 package dev.gaphunter.jwtcompanion.ui
 
 import com.intellij.openapi.ide.CopyPasteManager
+import com.intellij.openapi.project.Project
 import com.intellij.ui.JBColor
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
@@ -12,6 +13,7 @@ import dev.gaphunter.jwtcompanion.decode.JwtDecodeResult
 import dev.gaphunter.jwtcompanion.decode.JwtDecoder
 import dev.gaphunter.jwtcompanion.decode.JwtToken
 import dev.gaphunter.jwtcompanion.decode.TokenTimeStatus
+import dev.gaphunter.jwtcompanion.review.ReviewPrompt
 import dev.gaphunter.jwtcompanion.verify.JwtVerifier
 import dev.gaphunter.jwtcompanion.verify.VerificationResult
 import java.awt.BorderLayout
@@ -42,7 +44,7 @@ import javax.swing.SwingConstants
  * the plan (a plain Swing component can be constructed and inspected in a
  * headless JVM).
  */
-class JwtDecoderPanel : JPanel(BorderLayout()) {
+class JwtDecoderPanel(private val project: Project?) : JPanel(BorderLayout()) {
 
     private val tokenInput = JBTextArea(3, 0).apply {
         lineWrap = true
@@ -160,6 +162,8 @@ class JwtDecoderPanel : JPanel(BorderLayout()) {
                 statusLabel.foreground = null
                 renderClaims(headerClaimsPanel, result.token.headerClaims, isPayload = false)
                 renderClaims(payloadClaimsPanel, result.token.payloadClaims, isPayload = true)
+                // Real successful decode only -- never the malformed-token branch below.
+                ReviewPrompt.recordHit(project)
             }
             is JwtDecodeResult.MalformedToken -> {
                 statusLabel.text = result.reason
