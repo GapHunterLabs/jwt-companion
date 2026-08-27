@@ -21,7 +21,7 @@ class JwtDecoderPanelTest {
 
     @Test
     fun `panel renders one row per claim for a 17-claim token, not a fixed row count`() {
-        val panel = JwtDecoderPanel()
+        val panel = JwtDecoderPanel(project = null)
         // Each claim row is followed by a vertical-strut spacer component,
         // so the panel's child count is 2x the claim count, not 1x --
         // asserting the exact multiple (not just ">2") keeps this test
@@ -33,7 +33,7 @@ class JwtDecoderPanelTest {
 
     @Test
     fun `panel does not silently cap claim rendering at 2, the competitor's documented complaint`() {
-        val panel = JwtDecoderPanel()
+        val panel = JwtDecoderPanel(project = null)
         val rowCount = panel.decodeAndGetPayloadClaimRowCount(manyClaimsToken)
         // 2*2=4 would be the old competitor's ceiling; this must clear it
         // by a wide margin to actually prove the fix, not just barely pass.
