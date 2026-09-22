@@ -14,11 +14,15 @@ anywhere else.
   key should still report "Signature is valid" (an expired token can
   still have a genuinely valid signature — the two checks are
   independent).
+- `tokens/valid-es256.txt` + `tokens/valid-es256-public-key.pem` -- an
+  ES256 (ECDSA P-256) token. This is the family the long-standing
+  alternative plugin does not verify, and the one where a JWS signature
+  (raw `R || S`) has to be converted to the DER form the JDK expects.
+- `tokens/valid-ps256.txt` + `tokens/valid-ps256-public-key.pem` -- a
+  PS256 (RSA-PSS) token, the other family added in 0.2.0.
 - `tokens/many-claims.txt` — an unsigned (`alg: none`) token with 17
-  claims, used to demonstrate the tool window's scrollable claims panels
-  instead of a fixed-row table (the direct fix for the competitor
-  complaint this plugin exists to address — see the main README's "Why
-  it exists" section).
+  claims, used to demonstrate the tool window's scrollable claims panels,
+  one row per claim. Verifying it reports the token as unsigned.
 
 ## Regenerating these vectors
 

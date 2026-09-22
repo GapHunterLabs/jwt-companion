@@ -8,10 +8,17 @@
         window decodes the header and payload (Base64URL, not standard Base64) into
         two independently scrollable panels — no fixed-height table that becomes
         unusable once a token has more than a couple of claims.</p>
-        <p>Signature verification for <code>HS256</code> (shared secret) and
-        <code>RS256</code> (public key/certificate) using only the JDK's own
-        <code>javax.crypto</code>/<code>java.security</code> APIs — no bundled
-        crypto library. <code>iat</code>/<code>exp</code>/<code>nbf</code> claims
+        <p>Signature verification for the twelve JWS algorithms the JDK
+        implements — <code>HS256</code>/<code>HS384</code>/<code>HS512</code>,
+        <code>RS256</code>/<code>RS384</code>/<code>RS512</code>,
+        <code>PS256</code>/<code>PS384</code>/<code>PS512</code> and
+        <code>ES256</code>/<code>ES384</code>/<code>ES512</code> — using only
+        <code>javax.crypto</code>/<code>java.security</code>, with no bundled crypto
+        library. Paste the shared secret for HMAC or a public key/certificate PEM for
+        the rest: the token's own <code>alg</code> header decides which one is used.
+        An unsigned token (<code>alg: none</code>) is reported as unsigned rather than
+        as an unsupported algorithm.</p>
+        <p><code>iat</code>/<code>exp</code>/<code>nbf</code> claims
         are rendered as human-readable dates with a clear expired/expiring-soon/valid
         indicator.</p>
         <p>Nothing typed into the tool window is ever saved or cached between
