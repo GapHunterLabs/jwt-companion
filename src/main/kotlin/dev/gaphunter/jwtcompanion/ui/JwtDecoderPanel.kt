@@ -14,7 +14,9 @@ import dev.gaphunter.jwtcompanion.decode.JwtDecoder
 import dev.gaphunter.jwtcompanion.decode.JwtToken
 import dev.gaphunter.jwtcompanion.decode.TokenTimeStatus
 import dev.gaphunter.jwtcompanion.review.ReviewPrompt
+import dev.gaphunter.jwtcompanion.verify.JwsAlgorithm
 import dev.gaphunter.jwtcompanion.verify.JwtVerifier
+import dev.gaphunter.jwtcompanion.verify.KeyMaterial
 import dev.gaphunter.jwtcompanion.verify.VerificationResult
 import java.awt.BorderLayout
 import java.awt.Color
@@ -54,9 +56,9 @@ class JwtDecoderPanel(private val project: Project?) : JPanel(BorderLayout()) {
     private val statusLabel = JBLabel(" ")
     private val headerClaimsPanel = claimsListPanel()
     private val payloadClaimsPanel = claimsListPanel()
-    private val hs256SecretField = JBTextField()
-    private val rs256KeyArea = JBTextArea(6, 0).apply {
-        emptyText.text = "Paste a PEM public key or certificate here to verify RS256"
+    private val hmacSecretField = JBTextField()
+    private val publicKeyArea = JBTextArea(6, 0).apply {
+        emptyText.text = "Paste a PEM public key or certificate here (RS, PS and ES algorithms)"
     }
     private val verifyResultLabel = JBLabel(" ")
 
@@ -106,27 +108,24 @@ class JwtDecoderPanel(private val project: Project?) : JPanel(BorderLayout()) {
             BorderFactory.createTitledBorder("Verify Signature"),
         )
 
-        val hsRow = JPanel(GridLayout(1, 2, 6, 0))
-        hsRow.add(JBLabel("HS256 secret:"))
-        val hsButton = JButton("Verify HS256")
-        hsButton.addActionListener { verifyHs256() }
-        val hsInputRow = JPanel(BorderLayout(6, 0))
-        hsInputRow.add(hs256SecretField, BorderLayout.CENTER)
-        hsInputRow.add(hsButton, BorderLayout.EAST)
-        panel.add(labeledRow("HS256 shared secret", hsInputRow))
+        // One button, not one per algorithm family: the token's own `alg`
+        // header already says which of the two inputs below is the right
+        // one, and there are twelve algorithms to choose between.
+        panel.add(labeledRow("Shared secret (HS256/HS384/HS512)", hmacSecretField))
 
         panel.add(Box.createVerticalStrut(6))
 
-        val rsScroll = JBScrollPane(rs256KeyArea)
-        rsScroll.preferredSize = Dimension(0, 90)
-        val rsButton = JButton("Verify RS256")
-        rsButton.addActionListener { verifyRs256() }
-        val rsButtonRow = JPanel()
-        rsButtonRow.add(rsButton)
-        val rsBlock = JPanel(BorderLayout())
-        rsBlock.add(rsScroll, BorderLayout.CENTER)
-        rsBlock.add(rsButtonRow, BorderLayout.SOUTH)
-        panel.add(labeledRow("RS256 public key / certificate PEM", rsBlock))
+        val keyScroll = JBScrollPane(publicKeyArea)
+        keyScroll.preferredSize = Dimension(0, 90)
+        panel.add(labeledRow("Public key / certificate PEM (RS, PS, ES)", keyScroll))
+
+        panel.add(Box.createVerticalStrut(4))
+        val verifyButton = JButton("Verify")
+        verifyButton.addActionListener { verifySignature() }
+        val buttonRow = JPanel(BorderLayout())
+        buttonRow.add(verifyButton, BorderLayout.WEST)
+        buttonRow.alignmentX = JComponent.LEFT_ALIGNMENT
+        panel.add(buttonRow)
 
         panel.add(Box.createVerticalStrut(4))
         verifyResultLabel.alignmentX = JComponent.LEFT_ALIGNMENT
@@ -231,22 +230,25 @@ class JwtDecoderPanel(private val project: Project?) : JPanel(BorderLayout()) {
         else -> null
     }
 
-    private fun verifyHs256() {
+    /**
+     * Reads the token's `alg` header to decide which input to verify
+     * against -- the shared secret for HMAC, the PEM for RSA/ECDSA -- so
+     * nobody has to know that, say, PS384 needs the key box and not the
+     * secret box.
+     */
+    private fun verifySignature() {
         val token = currentToken ?: run {
             verifyResultLabel.text = "Decode a token first."
             verifyResultLabel.foreground = JBColor.RED
             return
         }
-        showVerificationResult(JwtVerifier.verifyHs256(token, hs256SecretField.text))
-    }
-
-    private fun verifyRs256() {
-        val token = currentToken ?: run {
-            verifyResultLabel.text = "Decode a token first."
-            verifyResultLabel.foreground = JBColor.RED
-            return
+        val algorithm = JwsAlgorithm.of(token.algorithm)
+        val material = when (algorithm?.keyMaterial) {
+            KeyMaterial.SECRET -> hmacSecretField.text
+            KeyMaterial.PUBLIC_KEY -> publicKeyArea.text
+            else -> ""
         }
-        showVerificationResult(JwtVerifier.verifyRs256(token, rs256KeyArea.text))
+        showVerificationResult(JwtVerifier.verify(token, material))
     }
 
     private fun showVerificationResult(result: VerificationResult) {
@@ -260,8 +262,13 @@ class JwtDecoderPanel(private val project: Project?) : JPanel(BorderLayout()) {
                 verifyResultLabel.foreground = JBColor.RED
             }
             is VerificationResult.UnsupportedAlgorithm -> {
-                verifyResultLabel.text = "Token uses algorithm '${result.algorithm}', not the one being verified against."
+                verifyResultLabel.text = "Cannot verify '${result.algorithm}'. Supported: " +
+                    JwsAlgorithm.verifiable().joinToString(", ") { it.alg } + "."
                 verifyResultLabel.foreground = JBColor.RED
+            }
+            is VerificationResult.UnsignedToken -> {
+                verifyResultLabel.text = "This token is unsigned (alg: none), so there is no signature to verify."
+                verifyResultLabel.foreground = JBColor.ORANGE
             }
             is VerificationResult.KeyParseError -> {
                 verifyResultLabel.text = result.message

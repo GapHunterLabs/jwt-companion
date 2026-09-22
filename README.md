@@ -5,17 +5,23 @@ dedicated tool window — no browser round-trip, no data leaving the IDE.
 
 ## Why it exists
 
-Born from real evidence in JetBrains Marketplace reviews of JWT (JSON
-Web Token) Analyzer (74,353 downloads), not assumptions:
+JWT decoding in the IDE is not a new idea -- the long-standing option is
+JWT (JSON Web Token) Analyzer (75,144 downloads, free). Two things led to
+this plugin, checked again in September 2026:
 
-- "Decoded payload represents the table with fixed two rows. So if you
-  have a lot of claims this is very inconvenient to scroll the content
-  to analyze it." — a real-world token with more than a couple of claims
-  becomes unreadable in the incumbent's UI.
-- "Unsupported algorithm RS256 | Can you please add the support? It
-  would have been 5 stars feedback, if it was supported." — RS256 is one
-  of the most common signing algorithms in production OAuth/OIDC setups,
-  and the incumbent doesn't support verifying it.
+- **Algorithm coverage.** The incumbent verifies HS256, HS384 and RS256.
+  This plugin verifies all twelve JWS algorithms the JDK implements:
+  HS256/384/512, RS256/384/512, PS256/384/512 and ES256/384/512. ECDSA
+  (the `ES*` family, used by most OIDC providers that moved off RSA) and
+  RSA-PSS are the practical gaps.
+- **A token with many claims stays readable.** Header and payload each get
+  their own scrolling panel with one row per claim, checked by an
+  automated test (`JwtDecoderPanelTest`) that decodes a real 17-claim
+  token and asserts every claim gets a row.
+
+What the incumbent has and this plugin does not: editing claim values, a
+default keypair stored in Preferences, and relative-time rendering. If
+those matter more than algorithm coverage, it is the better tool.
 
 ## Why built this way
 
@@ -55,13 +61,13 @@ token → **Decode**. Header and payload claims appear in their own tabs,
 each independently scrollable. `iat`/`exp`/`nbf` are shown as
 human-readable UTC dates with an EXPIRED/EXPIRING_SOON/NOT_YET_VALID/
 VALID indicator. To verify the signature, enter the shared secret (HS256)
-or paste a public key/certificate PEM (RS256) in the panel below and
-click the matching **Verify** button.
+or paste a public key/certificate PEM (`RS*`, `PS*`, `ES*`) in the panel
+below and click **Verify** -- the token's own `alg` header decides which
+of the two inputs is used.
 
 ## Enterprise / Team Licensing
 
-Need enterprise features, support for additional algorithms, or team
-licensing? Contact us at **gaphunterlabs@gmail.com**.
+Need enterprise features or team licensing? Contact us at **gaphunterlabs@gmail.com**.
 
 ## Development
 
