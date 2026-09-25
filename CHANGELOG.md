@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [0.2.1]
+
+### Fixed
+
+- Review/star CTA now links to this plugin's own Marketplace
+  reviews page instead of the vendor's generic plugin list.
+
 ## [0.2.0]
 
 ### Added
@@ -72,7 +79,8 @@
 - Nothing typed into the tool window (token, secret, key) is persisted
   between sessions — in-memory only.
 
-[Unreleased]: https://github.com/GapHunterLabs/jwt-companion/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/GapHunterLabs/jwt-companion/compare/0.2.1...HEAD
+[0.2.1]: https://github.com/GapHunterLabs/jwt-companion/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.3...0.2.0
 [0.1.3]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/GapHunterLabs/jwt-companion/compare/0.1.1...0.1.2
