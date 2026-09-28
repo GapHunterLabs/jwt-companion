@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- "Signature is valid." is readable in dark themes: it was drawn in a
+  dark green on the dark background. It now uses the theme's success
+  color.
+
 ## [0.2.1]
 
 ### Fixed

@@ -255,7 +255,7 @@ class JwtDecoderPanel(private val project: Project?) : JPanel(BorderLayout()) {
         when (result) {
             is VerificationResult.Valid -> {
                 verifyResultLabel.text = "Signature is valid."
-                verifyResultLabel.foreground = JBColor.GREEN.darker()
+                verifyResultLabel.foreground = SUCCESS_COLOR
             }
             is VerificationResult.InvalidSignature -> {
                 verifyResultLabel.text = "Signature does NOT match."
@@ -279,5 +279,11 @@ class JwtDecoderPanel(private val project: Project?) : JPanel(BorderLayout()) {
                 verifyResultLabel.foreground = JBColor.RED
             }
         }
+    }
+
+    private companion object {
+        // The theme's own success color. JBColor.GREEN.darker(), used before, is (68, 105, 59) in a
+        // dark theme -- a dark green on a dark background, hard to read at the one moment that matters.
+        val SUCCESS_COLOR: Color = JBColor.namedColor("Label.successForeground", JBColor(0x368746, 0x5FB865))
     }
 }
