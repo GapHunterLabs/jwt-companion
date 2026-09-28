@@ -3,6 +3,13 @@
 IntelliJ-family plugin. Decode and verify JSON Web Tokens directly in a
 dedicated tool window — no browser round-trip, no data leaving the IDE.
 
+![JWT Companion: Decode and verify JSON Web Tokens without leaving the IDE](docs/media/hero.gif)
+
+Each feature on its own:
+[Decode any JWT](docs/media/01-decode.gif) ·
+[Verify the signature](docs/media/02-verify.gif) ·
+[Expiry at a glance](docs/media/03-expiry.gif)
+
 ## Why it exists
 
 JWT decoding in the IDE is not a new idea -- the long-standing option is
