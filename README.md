@@ -72,9 +72,12 @@ or paste a public key/certificate PEM (`RS*`, `PS*`, `ES*`) in the panel
 below and click **Verify** -- the token's own `alg` header decides which
 of the two inputs is used.
 
-## Enterprise / Team Licensing
+## Support
 
-Need enterprise features or team licensing? Contact us at **gaphunterlabs@gmail.com**.
+- **Bugs and feature requests:** [GitHub Issues](https://github.com/GapHunterLabs/jwt-companion/issues)
+- **Questions, or custom rules for a team's codebase:** **gaphunterlabs@gmail.com**
+- **Security vulnerabilities:** report privately as described in [SECURITY.md](SECURITY.md), not in a public issue.
+- **Privacy and network behavior:** [PRIVACY.md](PRIVACY.md)
 
 ## Development
 
