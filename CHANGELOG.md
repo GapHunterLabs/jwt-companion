@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+- `PRIVACY.md` describes the values the plugin keeps in the IDE's local
+  settings.
+
 ### Fixed
 
 - "Signature is valid." is readable in dark themes: it was drawn in a
