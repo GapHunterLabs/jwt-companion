@@ -48,7 +48,7 @@ those matter more than algorithm coverage, it is the better tool.
   succeeds with the correct public key and fails with an unrelated one —
   not just "compiles and looks plausible."
 - **A hand-rolled, minimal JSON object parser instead of a new
-  dependency** — same call already made elsewhere in this workspace
+  dependency**: the same call already made in my other plugins
   (Ansible Companion's bundled module index, API Security Companion's
   OpenAPI checks): no JSON/YAML library ships on the platform's core
   classpath, and a JWT header/payload is always a single, mostly-flat
